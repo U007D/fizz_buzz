@@ -35,7 +35,7 @@ pub struct FizzBuzz {}
 impl FizzBuzz {
     pub fn calc(range: RangeInclusive<NonZeroUsize>) -> String {
         let mut result = String::new();
-        let range = RangeInclusive::new(range.start().get(), range.end().get());
+        let range = range.start().get()..=range.end().get();
         #[allow(clippy::integer_arithmetic)]
         range.for_each(|n| result += &match n {
             n if n % 15 == 0 => String::from("fizzbuzz "),
@@ -43,10 +43,11 @@ impl FizzBuzz {
             n if n % 5 == 0 => String::from("buzz "),
             n => (n.to_string() + " "),
         });
-        result.trim().to_string()
+        result.trim()
+              .to_string()
     }
 }
 
 pub fn run(args: Args) -> Result<String> {
-    Ok(FizzBuzz::calc(RangeInclusive::new(args.start.get(), args.end.get())))
+    Ok(FizzBuzz::calc(args.start.get()..=args.end.get()))
 }
