@@ -38,7 +38,7 @@ impl FizzBuzz {
         let range = RangeInclusive::new(range.start().get(), range.end().get());
         #[allow(clippy::integer_arithmetic)]
         range.for_each(|n| result += &match n {
-            n if n % 3 == 0 && n % 5 == 0 => String::from("fizzbuzz "),
+            n if n % 15 == 0 => String::from("fizzbuzz "),
             n if n % 3 == 0 => String::from("fizz "),
             n if n % 5 == 0 => String::from("buzz "),
             n => (n.to_string() + " "),

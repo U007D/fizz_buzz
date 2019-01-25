@@ -19,7 +19,7 @@ use fizz_buzz::{
 use structopt::StructOpt;
 
 fn main() -> Result<()> {
-    run(Args::from_args())?;
+    println!("{}", run(Args::from_args())?);
     Ok(())
 }
 
