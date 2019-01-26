@@ -1,15 +1,18 @@
 use std::{
     num::NonZeroUsize,
+    ops::Deref,
     str::FromStr
 };
 use crate::Error;
 
 #[derive(Debug)]
-pub struct ArgNonZeroUsize(NonZeroUsize);
+pub struct ArgNonZeroUsize(pub(crate) NonZeroUsize);
 
-impl ArgNonZeroUsize {
-    pub fn get(&self) -> NonZeroUsize {
-        self.0
+impl Deref for ArgNonZeroUsize {
+    type Target = NonZeroUsize;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
     }
 }
 

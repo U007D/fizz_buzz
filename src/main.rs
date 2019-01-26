@@ -11,15 +11,16 @@
 // ^^^ End of safety-critical lint section ^^^
 #![allow(clippy::match_bool,)]
 
-use fizz_buzz::{
-    Args,
-    Result,
-    run,
-};
 use structopt::StructOpt;
 
+use fizz_buzz::{
+    Args,
+    calc,
+    Result,
+    xform,
+};
+
 fn main() -> Result<()> {
-    println!("{}", run(Args::from_args())?);
+    println!("{}", calc(Args::from_args(), xform)?);
     Ok(())
 }
-

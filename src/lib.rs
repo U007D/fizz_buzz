@@ -11,11 +11,7 @@
         clippy::maybe_infinite_iter, clippy::option_unwrap_used, clippy::result_unwrap_used)]
 // ^^^ End of safety-critical lint section ^^^
 #![allow(clippy::match_bool,)]
-use std::{
-    num::NonZeroUsize,
-    ops::RangeInclusive,
-    result::Result as StdResult
-};
+use std::result::Result as StdResult;
 
 pub use {
     args::Args,
@@ -28,26 +24,23 @@ mod consts;
 mod error;
 #[cfg(test)]
 mod unit_tests;
+
 pub type Result<T> = StdResult<T, Error>;
 
-pub struct FizzBuzz {}
-
-impl FizzBuzz {
-    pub fn calc(range: RangeInclusive<NonZeroUsize>) -> String {
-        let mut result = String::new();
-        let range = range.start().get()..=range.end().get();
-        #[allow(clippy::integer_arithmetic)]
-        range.for_each(|n| result += &match n {
-            n if n % 15 == 0 => String::from("fizzbuzz "),
-            n if n % 3 == 0 => String::from("fizz "),
-            n if n % 5 == 0 => String::from("buzz "),
-            n => (n.to_string() + " "),
-        });
-        result.trim()
-              .to_string()
+pub fn xform(n: usize) -> String {
+    // cannot overflow/divide by zero ∵ denominator is constant and non-zero
+    #[allow(clippy::integer_arithmetic)]
+        match n {
+        n if n % 15 == 0 => String::from("fizzbuzz "),
+        n if n % 3 == 0 => String::from("fizz "),
+        n if n % 5 == 0 => String::from("buzz "),
+        n => (n.to_string() + " "),
     }
 }
 
-pub fn run(args: Args) -> Result<String> {
-    Ok(FizzBuzz::calc(args.start.get()..=args.end.get()))
+pub fn calc(args: Args, xform: impl Fn(usize) -> String) -> Result<String> {
+    Ok(((*args.start).get()..=(*args.end).get()).map(xform)
+                                                .collect::<String>()
+                                                .trim()
+                                                .to_string())
 }

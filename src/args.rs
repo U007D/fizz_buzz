@@ -1,4 +1,4 @@
-use arg_non_zero_usize::ArgNonZeroUsize;
+pub(super) use arg_non_zero_usize::ArgNonZeroUsize;
 use structopt::StructOpt;
 
 mod arg_non_zero_usize;

@@ -10,7 +10,7 @@ use std::{
 
 use crate::consts::*;
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum Error {
     ArgNotConvertibleToUtf8(OsString),
     ArgNotConvertibleToInteger(ParseIntError),
